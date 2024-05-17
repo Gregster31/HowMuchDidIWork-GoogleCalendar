@@ -12,11 +12,12 @@
   },
   "oauthScopes": [
     "https://www.googleapis.com/auth/calendar",
-    "https://www.googleapis.com/auth/calendar.readonly"
+    "https://www.googleapis.com/auth/calendar.readonly",
+    "https://www.googleapis.com/auth/calendar.addons.execute"
   ],
   "calendar": {
     "name": "Weekly Event Summary",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Calendar_icon_%282020%29.svg/1024px-Google_Calendar_icon_%282020%29.svg.png", 
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Calendar_icon_%282020%29.svg/1024px-Google_Calendar_icon_%282020%29.svg.png",
     "homepageTrigger": {
       "runFunction": "onHomepage"
     }
