@@ -1,0 +1,24 @@
+{
+  "timeZone": "America/Toronto",
+  "runtimeVersion": "V8",
+  "dependencies": {
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Calendar",
+        "serviceId": "calendar",
+        "version": "v3"
+      }
+    ]
+  },
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/calendar",
+    "https://www.googleapis.com/auth/calendar.readonly"
+  ],
+  "calendar": {
+    "name": "Weekly Event Summary",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Calendar_icon_%282020%29.svg/1024px-Google_Calendar_icon_%282020%29.svg.png", 
+    "homepageTrigger": {
+      "runFunction": "onHomepage"
+    }
+  }
+}
