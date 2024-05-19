@@ -13,11 +13,12 @@
   "oauthScopes": [
     "https://www.googleapis.com/auth/calendar",
     "https://www.googleapis.com/auth/calendar.readonly",
+    "https://www.googleapis.com/auth/script.external_request",
     "https://www.googleapis.com/auth/calendar.addons.execute"
   ],
   "calendar": {
-    "name": "Weekly Event Summary",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Calendar_icon_%282020%29.svg/1024px-Google_Calendar_icon_%282020%29.svg.png",
+    "name": "Weekly Job Time",
+    "logoUrl": "https://img.freepik.com/premium-vector/vector-3d-realistic-simple-classic-minimalistic-calendar-icon-blue-background-design-template-mockup-paper-white-blue-calendar-wall-background-with-icon-calendar-copy-space_153563-5942.jpg",
     "homepageTrigger": {
       "runFunction": "onHomepage"
     }
