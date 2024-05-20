@@ -1,4 +1,4 @@
-var CALENDAR_ID = 'cd2e01fe9f53f134e65f21f7d1112e69d76f9e5d98221b2de10340dd6f564c16@group.calendar.google.com'; // Replace with the ID of the calendar you want to retrieve events from 
+var CALENDAR_ID = 'TO CHANGE '; // Replace with the ID of the calendar you want to retrieve events from 
 
 /**
  * Runs when the add-on is installed.
