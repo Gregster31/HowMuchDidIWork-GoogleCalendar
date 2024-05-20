@@ -1,4 +1,5 @@
-var CALENDAR_ID = 'TO_CHANGE'; // Replace with the ID of the calendar you want to retrieve events from 
+var CALENDAR_ID = 'cd2e01fe9f53f134e65f21f7d1112e69d76f9e5d98221b2de10340dd6f564c16@group.calendar.google.com'; // Replace with the ID of the calendar you want to retrieve events from 
+
 /**
  * Runs when the add-on is installed.
  */
@@ -10,30 +11,57 @@ function onInstall(e) {
  * Runs when the add-on is opened from Calendar.
  */
 function onHomepage(e) {
-  var card = createCard();
+  var card = createCard(e);
 
-  // return CardService.newActionResponseBuilder()
-  //     .setNavigation(CardService.newNavigation().updateCard(card))
-  //     .build();
-
-  return card
+  return card;
 }
 
 /**
  * Creates a card to display the total event time.
  * A card is a pane in the sidebar.
  */
-function createCard() {
-  var totalHours = getTotalEventTime();
-  Logger.log('Total Hours: ' + totalHours);
-  
-  var cardSection = CardService.newCardSection()
-      .addWidget(CardService.newTextParagraph()
-          .setText('Job Total time for the week: ' + totalHours + ' hours'));
-  
+function createCard(e) {
+  var now = new Date();
+
+  // Get the hours for the current week
+  var currentWeekTotalHours = getCurrentTotalEventTime(now);
+
+  // Create new section for hours of the current week
+  var currentWeek = CardService.newCardSection()
+    .addWidget(CardService.newTextParagraph()
+      .setText('Total Job time for the week: ' + currentWeekTotalHours + ' hours'));
+
+  // Calculate the start date of the next week
+  var nextWeekStartDate = new Date(now);
+  nextWeekStartDate.setDate(now.getDate() + 7);
+  var nextWeekTotalHours = getCurrentTotalEventTime(nextWeekStartDate);
+  var nextWeek = CardService.newCardSection()
+    .addWidget(CardService.newTextParagraph()
+      .setText('Total Job time for next week: ' + nextWeekTotalHours + ' hours'));
+
+  // Calculate the start date of the previous week
+  var previousWeekStartDate = new Date(now);
+  previousWeekStartDate.setDate(now.getDate() - 7);
+  var previousWeekTotalHours = getCurrentTotalEventTime(previousWeekStartDate);
+  var previousWeek = CardService.newCardSection()
+    .addWidget(CardService.newTextParagraph()
+      .setText('Total Job time for previous week: ' + previousWeekTotalHours + ' hours'));
+
   var cardBuilder = CardService.newCardBuilder()
-      .setHeader(CardService.newCardHeader().setTitle('Weekly Job Time'))
-      .addSection(cardSection);
+    .setHeader(CardService.newCardHeader().setTitle('Weekly Job Time'))
+    .addSection(currentWeek)
+    .addSection(nextWeek)
+    .addSection(previousWeek);
+
+  // If formInput is provided (indicating form submission), add section for chosen week
+  if (e && e.formInput && e.formInput.weekPicker) {
+    var selectedDate = new Date(e.formInput.weekPicker);
+    var chosenWeekTotalTime = getCurrentTotalEventTime(selectedDate);
+    var chosenWeek = CardService.newCardSection()
+      .addWidget(CardService.newTextParagraph()
+        .setText('Total Job time for chosen week: ' + chosenWeekTotalTime + ' hours'));
+    cardBuilder.addSection(chosenWeek);
+  }
 
   var card = cardBuilder.build();
 
@@ -45,22 +73,17 @@ function createCard() {
 }
 
 
-
 /**
  * Gets the total time of all events in a specific calendar for the current week (Sunday to Saturday).
+ * @param {Date} now - The current date. 
  */
-function getTotalEventTime() {
-  var calendarId = CALENDAR_ID; 
-  
-  var now = new Date();
+function getCurrentTotalEventTime(now) {
   var startOfWeek = new Date(now);
   startOfWeek.setDate(now.getDate() - now.getDay()); // Start of the current week (Sunday)
   var endOfWeek = new Date(startOfWeek);
   endOfWeek.setDate(startOfWeek.getDate() + 6); // End of the current week (Saturday)
-  
-  var events = CalendarApp.getCalendarById(calendarId).getEvents(startOfWeek, endOfWeek);
-  
-  Logger.log('Number of events: ' + events.length);
+
+  var events = CalendarApp.getCalendarById(CALENDAR_ID).getEvents(startOfWeek, endOfWeek);
 
   var totalTime = 0; // in milliseconds
 
