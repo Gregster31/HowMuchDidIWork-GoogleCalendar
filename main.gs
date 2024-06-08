@@ -1,25 +1,18 @@
 var CALENDAR_ID = 'TO CHANGE '; // Replace with the ID of the calendar you want to retrieve events from 
 
-/**
- * Runs when the add-on is installed.
- */
+
 function onInstall(e) {
   onHomepage(e);
 }
 
-/**
- * Runs when the add-on is opened from Calendar.
- */
+
 function onHomepage(e) {
   var card = createCard(e);
 
   return card;
 }
 
-/**
- * Creates a card to display the total event time.
- * A card is a pane in the sidebar.
- */
+
 function createCard(e) {
   var now = new Date();
 
@@ -73,10 +66,7 @@ function createCard(e) {
 }
 
 
-/**
- * Gets the total time of all events in a specific calendar for the current week (Sunday to Saturday).
- * @param {Date} now - The current date. 
- */
+
 function getCurrentTotalEventTime(now) {
   var startOfWeek = new Date(now);
   startOfWeek.setDate(now.getDate() - now.getDay()); // Start of the current week (Sunday)
@@ -95,9 +85,7 @@ function getCurrentTotalEventTime(now) {
     });
   }
 
-  // Convert milliseconds to hours
   var totalHours = totalTime / (1000 * 60 * 60);
 
-  // Return the total time
   return totalHours.toFixed(2); // Round to 2 decimal places for better readability
 }
